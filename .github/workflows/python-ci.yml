@@ -12,7 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.11", "3.12", "3.13", "3.14"]
+        # Restrict to released, supported versions; 3.14 pre-release lacks
+        # reliable wheels for dev dependencies like ruff and fails CI.
+        python-version: ["3.11", "3.12", "3.13"]
 
     steps:
       - name: Checkout code
