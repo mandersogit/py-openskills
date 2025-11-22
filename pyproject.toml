@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openskills"
+version = "1.2.1"
+description = "Python port of the OpenSkills CLI."
+readme = "README.md"
+requires-python = ">=3.9"
+license = {file = "LICENSE"}
+authors = [{name = "OpenSkills Maintainers"}]
+dependencies = [
+    "click>=8.1,<9",
+    "PyYAML>=6,<7",
+]
+keywords = ["cli", "skills", "anthropic", "agent"]
+
+[project.optional-dependencies]
+prompts = ["questionary>=2.0,<3"]
+rich = ["rich>=13,<14"]
+dev = [
+    "pytest>=7,<9",
+    "ruff>=0.6",
+]
+
+[project.scripts]
+openskills = "openskills.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["openskills", "openskills.*"]
+
+[tool.ruff]
+line-length = 120
+exclude = [".git", "build", "dist", "node_modules", ".venv", "venv"]
+target-version = "py39"
