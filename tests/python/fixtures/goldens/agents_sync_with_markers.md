@@ -1,0 +1,41 @@
+# Team Agent Instructions
+
+Intro text for the team agent.
+
+<!-- SKILLS_TABLE_START -->
+## Available Skills
+
+<!-- SKILLS_TABLE_START -->
+<usage>
+When users ask you to perform tasks, check if any of the available skills below can help complete the task more effectively. Skills provide specialized capabilities and domain knowledge.
+
+How to use skills:
+- Invoke: Bash("openskills read <skill-name>")
+- The skill content will load with detailed instructions on how to complete the task
+- Base directory provided in output for resolving bundled resources (references/, scripts/, assets/)
+
+Usage notes:
+- Only use skills listed in <available_skills> below
+- Do not invoke a skill that is already loaded in your context
+- Each skill invocation is stateless
+</usage>
+
+<available_skills>
+
+<skill>
+<name>alpha</name>
+<description>First skill description</description>
+<location>project</location>
+</skill>
+
+<skill>
+<name>beta</name>
+<description>Second skill description</description>
+<location>global</location>
+</skill>
+
+</available_skills>
+<!-- SKILLS_TABLE_END -->
+<!-- SKILLS_TABLE_END -->
+
+Footer text.
