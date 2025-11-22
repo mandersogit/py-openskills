@@ -5,7 +5,7 @@ from __future__ import annotations
 import shutil
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable, Sequence
+from typing import Sequence
 
 import click
 
@@ -62,9 +62,9 @@ def _select_candidates(candidates: Sequence[SkillCandidate], *, yes: bool) -> li
 
 def _display_install_summary(result_label: str, dest: DestinationInfo) -> None:
     click.echo("")
-    click.echo(f"Read skill: openskills read <skill-name>")
+    click.echo("Read skill: openskills read <skill-name>")
     if dest.scope == "project":
-        click.echo(f"Sync to AGENTS.md: openskills sync")
+        click.echo("Sync to AGENTS.md: openskills sync")
     click.echo(result_label)
 
 
@@ -212,7 +212,6 @@ def sync_agents_md_command(*, yes: bool, cwd: Path | None = None) -> None:
         return
 
     content = agents_md.read_text(encoding="utf-8")
-    current = _parse_current_skill_names(content)
 
     chosen = _choose_sync_skills(skills, yes=yes)
     if not chosen:
