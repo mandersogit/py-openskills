@@ -3,7 +3,15 @@
 import click
 
 from . import __version__
-from .utils import exit_not_implemented
+from .operations import (
+    install_skill_command,
+    list_skills_command,
+    manage_skills_command,
+    read_skill_command,
+    remove_skill_command,
+    sync_agents_md_command,
+)
+from .utils.errors import exit_not_implemented
 
 CONTEXT_SETTINGS = {"help_option_names": ["-h", "--help"]}
 
@@ -24,7 +32,7 @@ def cli() -> None:
 
 @cli.command(name="list", help="List all installed skills")
 def list_skills() -> None:
-    _stub("list")
+    list_skills_command()
 
 
 @cli.command(name="install", help="Install skill from GitHub or Git URL")
@@ -45,13 +53,18 @@ def list_skills() -> None:
     help="Skip interactive selection, install all skills found",
 )
 def install(source: str, *, global_install: bool, universal: bool, yes: bool) -> None:
-    _stub("install")
+    install_skill_command(
+        source,
+        global_install=global_install,
+        universal=universal,
+        yes=yes,
+    )
 
 
 @cli.command(name="read", help="Read skill to stdout (for AI agents)")
 @click.argument("skill_name")
 def read(skill_name: str) -> None:
-    _stub("read")
+    read_skill_command(skill_name)
 
 
 @cli.command(
@@ -60,12 +73,13 @@ def read(skill_name: str) -> None:
 )
 @click.option("yes", "-y", "--yes", is_flag=True, help="Skip interactive selection, sync all skills")
 def sync(yes: bool) -> None:
-    _stub("sync")
+    sync_agents_md_command(yes=yes)
 
 
 @cli.command(name="manage", help="Interactively manage (remove) installed skills")
-def manage() -> None:
-    _stub("manage")
+@click.option("yes", "-y", "--yes", is_flag=True, help="Remove all without prompting")
+def manage(yes: bool) -> None:
+    manage_skills_command(yes=yes)
 
 
 @cli.command(
@@ -74,7 +88,7 @@ def manage() -> None:
 )
 @click.argument("skill_name")
 def remove(skill_name: str) -> None:
-    _stub("remove")
+    remove_skill_command(skill_name)
 
 
 # Register the short alias after definition to keep Click compatibility.

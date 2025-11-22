@@ -57,12 +57,13 @@ Aim to minimize runtime dependencies while matching current functionality:
 - **Not Planned**: `GitPython`—all Git operations shell out to the system `git` via `subprocess`.
 
 ## Current Status
-- **CLI skeleton in place**: The Click-based entry point exposes the full command surface (`install`, `list`, `read`, `sync`, `manage`, `remove`, and `rm`) with version/help wiring and temporary stubs for functionality gaps.【F:openskills/cli.py†L6-L71】【F:tests/python/test_cli.py†L1-L51】
+- **Command flows implemented**: All CLI commands delegate to full Python implementations for install, list, read, sync, manage, and remove, reusing the shared services for discovery, copying, working-copy prep, and AGENTS.md updates.【F:openskills/cli.py†L6-L71】【F:openskills/operations.py†L1-L246】
 - **Core utilities landed**: Directory resolution, YAML/frontmatter parsing, skill discovery, and AGENTS.md rendering helpers have been implemented with accompanying unit tests to mirror the Node behavior for supporting services.【F:openskills/utils/dirs.py†L6-L77】【F:openskills/utils/yaml.py†L7-L23】【F:openskills/utils/skills.py†L11-L68】【F:openskills/utils/agents_md.py†L1-L76】【F:tests/python/test_dirs.py†L1-L51】【F:tests/python/test_renderers.py†L1-L78】
 - **Repository handling established**: Git-backed working-copy preparation (shorthand normalization, local/remote support, commit capture, and cleanup) is available and validated via tests; fetch/pull helpers are in place for future flows.【F:openskills/utils/repo_service.py†L1-L82】【F:tests/python/test_repo_service.py†L1-L52】
 - **File operations and validation**: Backups/moves/copies include overwrite prompts/flags, while `SKILL.md` validation covers frontmatter parsing and structured metadata with strict/lenient modes and tests.【F:openskills/utils/fs_ops.py†L1-L63】【F:openskills/utils/skill_validation.py†L1-L58】【F:tests/python/test_fs_ops.py†L1-L77】【F:tests/python/test_skill_validation.py†L1-L96】
+- **Integration coverage**: Workflow tests exercise git-based installs, listing, reading, AGENTS.md sync, and removal flows using temporary repositories and mocked prompts.【F:tests/python/test_workflows.py†L1-L81】【F:tests/python/test_workflows.py†L82-L121】
 
 ## Next Steps
-- **Implement command flows**: Replace CLI stubs with real wiring into the services for install/list/read/sync/manage/remove, ensuring exit-code and messaging parity with the Node tool.
-- **Integrate services**: Connect repository preparation, validation, file transfer, and AGENTS.md rendering into cohesive flows (including prompt/`--yes` handling) and add integration-style tests that mirror user scenarios.
-- **Packaging & docs**: Finalize distribution details (console entry point, optional dependencies), update README with Python usage, and document migration guidance once command parity is reached.
+- **Packaging & distribution**: Publish the Python package with a console script entry point, define dependencies/optional extras, and verify installation on supported Python versions.
+- **Documentation & migration**: Update README/SECURITY to explain Python usage, installation paths (project/global/universal), and parity notes for users migrating from the Node CLI.
+- **Live git validation**: Add tests or manual checks against real remote git sources (not just local temp repos) to confirm networked workflows and error messaging.
