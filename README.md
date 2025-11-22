@@ -1,18 +1,8 @@
-# OpenSkills
+# Py-OpenSkills (Work in Progress)
 
-[![npm version](https://img.shields.io/npm/v/openskills.svg)](https://www.npmjs.com/package/openskills)
-[![npm downloads](https://img.shields.io/npm/dm/openskills.svg)](https://www.npmjs.com/package/openskills)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+Py-OpenSkills is an in-progress **Python reimplementation** of the OpenSkills CLI. The goal is to deliver a fully compatible skills manager for Claude Code and other AI coding agents while aligning with Python tooling and packaging. This repository currently includes artifacts from the original TypeScript project as reference material while the port proceeds.
 
-**The closest implementation matching Claude Code's skills system** — same prompt format, same marketplace, same folders, just using CLI instead of tools.
-
-```bash
-npm i -g openskills
-openskills install anthropics/skills
-openskills sync
-```
-
-> **Found this useful?** Follow [@nummanthinks](https://x.com/nummanthinks) for more AI tooling!
+**Status:** Expect breaking changes and incomplete command coverage while the Python CLI is built out. Commands, flags, and folder layouts are being kept consistent with the original Node release to keep migration simple.
 
 ---
 
@@ -42,7 +32,7 @@ OpenSkills replicates Claude Code's skills system with **100% compatibility**:
 - ✅ **Same SKILL.md format** — YAML frontmatter + markdown instructions
 - ✅ **Same progressive disclosure** — Load skills on demand, not upfront
 
-**Only difference:** Claude Code uses `Skill` tool, OpenSkills uses `openskills read <name>` CLI command.
+**Only difference:** Claude Code uses `Skill("pdf")` tool, OpenSkills uses `openskills read <name>` CLI command.
 
 **Advanced:** Use `--universal` flag to install to `.agent/skills/` for Claude Code + other agents sharing one AGENTS.md.
 
@@ -50,10 +40,12 @@ OpenSkills replicates Claude Code's skills system with **100% compatibility**:
 
 ## Quick Start
 
-### 1. Install
+### 1. Install (Python, local checkout while WIP)
 
 ```bash
-npm i -g openskills
+python -m pip install .
+# or, for development
+python -m pip install -e .[prompts,rich]
 ```
 
 ### 2. Install Skills
@@ -78,12 +70,13 @@ Done! Your agent now has skills with the same `<available_skills>` format as Cla
 
 ## Python package and migration notes
 
-- **Minimum Python**: 3.9+.
+- **Minimum Python**: 3.11+.
 - **Install**: From this repository, run `python -m pip install .` (or `python -m pip install .[prompts,rich]` to pull in optional extras).
 - **Entry point**: `openskills` is installed as a console script, matching the Node CLI name for drop-in usage.
 - **Optional dependencies**:
   - `questionary` unlocks richer interactive prompts (multi-select/confirm flows). Without it, the CLI falls back to standard Click prompts and non-interactive flags (`--yes`) still work.
   - `rich` provides formatted console output. Without it, messages render as plain text.
+- **Typing**: Parallel work is adopting Python 3.11+ typing features (e.g., native generics, `Path.is_relative_to`) across the codebase; type hints may change as modules are ported.
 - **Migration**: Commands, flags, and folder layouts mirror the Node version, so existing automation can switch to the Python package without changes. Optional extras are not required for headless environments.
 
 ---
@@ -351,7 +344,7 @@ openskills install anthropics/skills --universal
 
 ### Interactive by Default
 
-All commands use beautiful TUI by default:
+All commands use beautiful TUI by default (Python implementation aims to match this experience; falls back to Click prompts if optional dependencies are missing):
 
 **Install:**
 ```bash
@@ -463,10 +456,15 @@ This loads comprehensive instructions on:
 
 ## Requirements
 
-- **Node.js** 20.6+ (for ora dependency)
+- **Python** 3.11+
 - **Git** (for cloning repositories)
+- **Optional:** Node.js toolchain remains in the repo for reference during the port but is not required to run the Python CLI.
 
 ---
+
+## Contributing
+
+Contributions are welcome! Contributor guidelines currently reflect the TypeScript workflow and will be updated for the Python toolchain. A documentation update plan is being tracked in `DOCS_TRANSFORMATION_PLAN.md`.
 
 ## License
 

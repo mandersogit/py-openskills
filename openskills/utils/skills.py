@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List
 
 from .dirs import get_search_dirs
 from .yaml import extract_yaml_field
@@ -24,16 +23,12 @@ class Skill:
 
 
 def _is_relative_to(base: Path, target: Path) -> bool:
-    """Return True if ``target`` is within ``base`` (Python <3.9 compatibility)."""
+    """Return True if ``target`` is within ``base`` (uses Python 3.11+ Path helpers)."""
 
-    try:
-        target.relative_to(base)
-        return True
-    except ValueError:
-        return False
+    return target.is_relative_to(base)
 
 
-def discover_skills(*, cwd: Path | None = None, home: Path | None = None) -> List[Skill]:
+def discover_skills(*, cwd: Path | None = None, home: Path | None = None) -> list[Skill]:
     """Find all installed skills across search roots.
 
     Deduplicates by skill name, honoring search priority to mirror Node output.
@@ -42,7 +37,7 @@ def discover_skills(*, cwd: Path | None = None, home: Path | None = None) -> Lis
     cwd = Path.cwd() if cwd is None else cwd
     search_dirs = get_search_dirs(cwd=cwd, home=home)
 
-    skills: List[Skill] = []
+    skills: list[Skill] = []
     seen: set[str] = set()
 
     for directory in search_dirs:

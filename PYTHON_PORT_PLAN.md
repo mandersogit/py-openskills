@@ -5,7 +5,7 @@ This document captures the concrete plan to port the existing JavaScript/TypeScr
 ## Objectives
 - Replicate the current CLI surface (commands, options, exit codes, help text) with Python parity.
 - Preserve behavior for skill installation, listing/reading, AGENTS.md synchronization, and management/removal flows.
-- Package the tool for easy installation and cross-platform use.
+- Package the tool for easy installation and cross-platform use on Python 3.11+.
 
 ## Workstreams for Parallel Delivery
 The work is partitioned into non-overlapping tracks so multiple contributors can proceed simultaneously with minimal merge conflicts.
@@ -41,9 +41,9 @@ The work is partitioned into non-overlapping tracks so multiple contributors can
    - Preserve messaging and exit statuses to maintain compatibility with existing automation.
 
 7) **Packaging, Distribution, and Documentation**
-   - Package as a Python module with a console entry point (e.g., `openskills`) and define the minimum supported Python version.
+   - Package as a Python module with a console entry point (e.g., `openskills`) and set the baseline to Python 3.11+.
    - Write installation/migration notes so Python and Node CLIs are interchangeable; document optional-dependency behavior and fallbacks.
-   - Set up CI for lint/test on supported Python versions.
+   - Adopt Python 3.11-era typing (native generics, `Path.is_relative_to`) throughout new modules and ensure CI validates on 3.11+.
 
 ## Coordination Notes
 - Keep command wiring minimal and delegate logic to services to avoid cross-branch churn.

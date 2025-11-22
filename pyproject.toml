@@ -7,7 +7,7 @@ name = "openskills"
 version = "1.2.1"
 description = "Python port of the OpenSkills CLI."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 license = {file = "LICENSE"}
 authors = [{name = "OpenSkills Maintainers"}]
 dependencies = [
@@ -33,4 +33,4 @@ include = ["openskills", "openskills.*"]
 [tool.ruff]
 line-length = 120
 exclude = [".git", "build", "dist", "node_modules", ".venv", "venv"]
-target-version = "py39"
+target-version = "py311"
