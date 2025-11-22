@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import subprocess
 from pathlib import Path
 
@@ -25,9 +26,17 @@ def _create_git_repo(base: Path) -> Path:
     nested.mkdir()
     _write_skill(nested, "skill-two", "Skill two description", "Details for two")
 
-    subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
-    subprocess.run(["git", "add", "-A"], cwd=repo, check=True)
-    subprocess.run(["git", "commit", "-m", "init"], cwd=repo, check=True)
+    git_env = {
+        **os.environ,
+        "GIT_AUTHOR_NAME": "Test",
+        "GIT_AUTHOR_EMAIL": "test@example.com",
+        "GIT_COMMITTER_NAME": "Test",
+        "GIT_COMMITTER_EMAIL": "test@example.com",
+    }
+
+    subprocess.run(["git", "init", "-q"], cwd=repo, check=True, env=git_env)
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, env=git_env)
+    subprocess.run(["git", "commit", "-m", "init"], cwd=repo, check=True, env=git_env)
     return repo
 
 
