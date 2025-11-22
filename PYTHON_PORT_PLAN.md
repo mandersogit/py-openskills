@@ -11,7 +11,7 @@ This document captures the concrete plan to port the existing JavaScript/TypeScr
 The work is partitioned into non-overlapping tracks so multiple contributors can proceed simultaneously with minimal merge conflicts.
 
 1) **CLI Skeleton & Command Wiring (Click)**
-   - Create the entry point module and `click` command group mirroring `src/cli.ts` (commands: `install`, `list`, `read`, `sync`, `manage`, `remove`).
+   - Create the entry point module and `click` command group mirroring `legacy-typescript/src/cli.ts` (commands: `install`, `list`, `read`, `sync`, `manage`, `remove`).
    - Implement option/flag parity (aliases, defaults, `--help`, `--version`) and shared error/exit-code handling utilities.
    - Provide a stub implementation for each command that delegates to yet-to-be-built services; keep the file small to avoid conflicts.
    - Add initial parity tests that only assert CLI shape/help text to unblock other tracks.
