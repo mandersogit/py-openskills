@@ -37,14 +37,30 @@ def get_skills_dir(
     return base_dir / folder
 
 
-def get_search_dirs(*, cwd: Path | str | None = None, home_dir: Path | str | None = None) -> list[Path]:
+def _resolve_home_path(home_dir: Path | str | None, home: Path | str | None) -> Path:
+    """Select and normalize the home directory hint.
+
+    Supports both the legacy ``home_dir`` keyword and the newer ``home`` keyword
+    used by other utilities. ``home`` takes precedence when both are supplied.
+    """
+
+    selected = home if home is not None else home_dir
+    return _as_path(selected, default=Path.home())
+
+
+def get_search_dirs(
+    *,
+    cwd: Path | str | None = None,
+    home_dir: Path | str | None = None,
+    home: Path | str | None = None,
+) -> list[Path]:
     """Return all searchable skill roots in priority order.
 
     Priority: project .agent, global .agent, project .claude, global .claude.
     """
 
     cwd_path = _as_path(cwd, default=Path.cwd())
-    home_path = _as_path(home_dir, default=Path.home())
+    home_path = _resolve_home_path(home_dir, home)
 
     return [
         cwd_path / ".agent/skills",  # 1. Project universal (.agent)
