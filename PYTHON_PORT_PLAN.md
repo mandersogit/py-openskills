@@ -55,3 +55,14 @@ Aim to minimize runtime dependencies while matching current functionality:
 - **Required**: `click` (CLI), `PyYAML` (YAML frontmatter).
 - **Optional**: `questionary` (prompts/multi-select), `rich` (formatted console output), `packaging` (version/specifier helpers if needed).
 - **Not Planned**: `GitPython`—all Git operations shell out to the system `git` via `subprocess`.
+
+## Current Status
+- **CLI skeleton in place**: The Click-based entry point exposes the full command surface (`install`, `list`, `read`, `sync`, `manage`, `remove`, and `rm`) with version/help wiring and temporary stubs for functionality gaps.【F:openskills/cli.py†L6-L71】【F:tests/python/test_cli.py†L1-L51】
+- **Core utilities landed**: Directory resolution, YAML/frontmatter parsing, skill discovery, and AGENTS.md rendering helpers have been implemented with accompanying unit tests to mirror the Node behavior for supporting services.【F:openskills/utils/dirs.py†L6-L77】【F:openskills/utils/yaml.py†L7-L23】【F:openskills/utils/skills.py†L11-L68】【F:openskills/utils/agents_md.py†L1-L76】【F:tests/python/test_dirs.py†L1-L51】【F:tests/python/test_renderers.py†L1-L78】
+- **Repository handling established**: Git-backed working-copy preparation (shorthand normalization, local/remote support, commit capture, and cleanup) is available and validated via tests; fetch/pull helpers are in place for future flows.【F:openskills/utils/repo_service.py†L1-L82】【F:tests/python/test_repo_service.py†L1-L52】
+- **File operations and validation**: Backups/moves/copies include overwrite prompts/flags, while `SKILL.md` validation covers frontmatter parsing and structured metadata with strict/lenient modes and tests.【F:openskills/utils/fs_ops.py†L1-L63】【F:openskills/utils/skill_validation.py†L1-L58】【F:tests/python/test_fs_ops.py†L1-L77】【F:tests/python/test_skill_validation.py†L1-L96】
+
+## Next Steps
+- **Implement command flows**: Replace CLI stubs with real wiring into the services for install/list/read/sync/manage/remove, ensuring exit-code and messaging parity with the Node tool.
+- **Integrate services**: Connect repository preparation, validation, file transfer, and AGENTS.md rendering into cohesive flows (including prompt/`--yes` handling) and add integration-style tests that mirror user scenarios.
+- **Packaging & docs**: Finalize distribution details (console entry point, optional dependencies), update README with Python usage, and document migration guidance once command parity is reached.
