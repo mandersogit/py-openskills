@@ -1,7 +1,5 @@
 """Minimal YAML helpers for parsing SKILL.md frontmatter."""
 
-from __future__ import annotations
-
 import re
 
 __all__ = ["extract_yaml_field", "has_valid_frontmatter"]

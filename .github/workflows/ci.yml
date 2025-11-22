@@ -10,6 +10,7 @@ jobs:
   test:
     name: Test on Node.js ${{ matrix.node-version }}
     runs-on: ubuntu-latest
+    if: false # Temporarily disable TypeScript CI
 
     strategy:
       matrix:

@@ -1,10 +1,10 @@
 """Validate and parse SKILL.md files with YAML frontmatter."""
-from __future__ import annotations
+
+import warnings
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, Optional
-import warnings
+from typing import Any
 
 import yaml
 
@@ -19,7 +19,7 @@ class SkillMetadata:
 
     name: str
     description: str
-    context: Optional[str] = None
+    context: str | None = None
 
 
 @dataclass
@@ -31,7 +31,7 @@ class SkillDocument:
     body: str
 
 
-def load_skill_document(path: Path | str, *, strict: bool = True) -> Optional[SkillDocument]:
+def load_skill_document(path: Path | str, *, strict: bool = True) -> SkillDocument | None:
     """Load and validate a SKILL.md file.
 
     Args:
@@ -59,7 +59,7 @@ def load_skill_document(path: Path | str, *, strict: bool = True) -> Optional[Sk
     return SkillDocument(path=skill_path, metadata=metadata, body=body)
 
 
-def _handle_error(message: str, strict: bool) -> Optional[SkillDocument]:
+def _handle_error(message: str, strict: bool) -> SkillDocument | None:
     if strict:
         raise SkillValidationError(message)
 
@@ -67,7 +67,7 @@ def _handle_error(message: str, strict: bool) -> Optional[SkillDocument]:
     return None
 
 
-def _split_frontmatter(content: str) -> tuple[Dict[str, Any], str]:
+def _split_frontmatter(content: str) -> tuple[dict[str, Any], str]:
     lines = content.splitlines()
     if not lines or lines[0].strip() != "---":
         raise SkillValidationError("SKILL.md is missing YAML frontmatter start delimiter ('---')")
@@ -90,7 +90,7 @@ def _split_frontmatter(content: str) -> tuple[Dict[str, Any], str]:
     return data, body
 
 
-def _parse_frontmatter(frontmatter: Dict[str, Any]) -> SkillMetadata:
+def _parse_frontmatter(frontmatter: dict[str, Any]) -> SkillMetadata:
     name = frontmatter.get("name")
     description = frontmatter.get("description")
     context = frontmatter.get("context")

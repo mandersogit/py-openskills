@@ -1,10 +1,8 @@
 """Prompt helpers that gracefully degrade when optional dependencies are missing."""
 
-from __future__ import annotations
-
 import importlib
 import importlib.util
-from typing import Iterable, List, Sequence
+from collections.abc import Iterable, Sequence
 
 import click
 
@@ -26,7 +24,7 @@ def _load_questionary():
 
 def prompt_for_removal_selection(
     available: Sequence[str], *, yes: bool = False
-) -> List[str]:
+) -> list[str]:
     """Prompt for which skills to remove using ``questionary`` when available.
 
     When ``yes`` is ``True``, all available skills are selected without
