@@ -21,13 +21,9 @@ class Skill:
 
 
 def _is_relative_to(base: Path, target: Path) -> bool:
-    """Return True if ``target`` is within ``base`` (Python <3.9 compatibility)."""
+    """Return True if ``target`` is within ``base`` (uses Python 3.11+ Path helpers)."""
 
-    try:
-        target.relative_to(base)
-        return True
-    except ValueError:
-        return False
+    return target.is_relative_to(base)
 
 
 def discover_skills(*, cwd: Path | None = None, home: Path | None = None) -> list[Skill]:
