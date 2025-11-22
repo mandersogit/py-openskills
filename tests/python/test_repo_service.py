@@ -1,11 +1,9 @@
-from __future__ import annotations
-
 import os
 import re
 import subprocess
 import tempfile
 from pathlib import Path
-from typing import Callable, Sequence
+from collections.abc import Callable, Sequence
 
 from openskills.utils.repo_service import prepare_skill_working_copy
 

@@ -1,12 +1,11 @@
 """File operations with overwrite safeguards for skill transfers."""
 
-from __future__ import annotations
-
 import os
 import shutil
 import time
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Callable, Literal, Optional
+from typing import Literal
 
 PromptFn = Callable[[str], bool]
 
@@ -15,10 +14,10 @@ PromptFn = Callable[[str], bool]
 class TransferResult:
     status: Literal["copied", "backed_up", "moved", "skipped"]
     target_path: str
-    backup_path: Optional[str] = None
+    backup_path: str | None = None
 
 
-def backup_skill_dir(target_dir: str, backup_root: Optional[str] = None) -> str:
+def backup_skill_dir(target_dir: str, backup_root: str | None = None) -> str:
     """Backup an existing skill directory before overwrite."""
 
     root = backup_root or os.path.dirname(target_dir)
@@ -34,8 +33,8 @@ def copy_skill_dir(
     target_dir: str,
     *,
     yes: bool = False,
-    prompt: Optional[PromptFn] = None,
-    backup_root: Optional[str] = None,
+    prompt: PromptFn | None = None,
+    backup_root: str | None = None,
 ) -> TransferResult:
     """Copy a skill directory with overwrite safeguards and optional backup."""
 
@@ -63,8 +62,8 @@ def move_skill_dir(
     target_dir: str,
     *,
     yes: bool = False,
-    prompt: Optional[PromptFn] = None,
-    backup_root: Optional[str] = None,
+    prompt: PromptFn | None = None,
+    backup_root: str | None = None,
 ) -> TransferResult:
     """Move a skill directory with overwrite safeguards and optional backup."""
 

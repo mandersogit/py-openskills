@@ -1,7 +1,5 @@
 """Shared helpers for consistent exit handling."""
 
-from __future__ import annotations
-
 from typing import NoReturn
 
 import click

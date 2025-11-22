@@ -1,7 +1,5 @@
 """Command-line interface for the OpenSkills Python port."""
 
-from __future__ import annotations
-
 import click
 
 from . import __version__

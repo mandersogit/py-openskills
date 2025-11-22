@@ -1,10 +1,7 @@
 """Skill discovery utilities."""
 
-from __future__ import annotations
-
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List
 
 from .dirs import get_search_dirs
 from .yaml import extract_yaml_field
@@ -33,7 +30,7 @@ def _is_relative_to(base: Path, target: Path) -> bool:
         return False
 
 
-def discover_skills(*, cwd: Path | None = None, home: Path | None = None) -> List[Skill]:
+def discover_skills(*, cwd: Path | None = None, home: Path | None = None) -> list[Skill]:
     """Find all installed skills across search roots.
 
     Deduplicates by skill name, honoring search priority to mirror Node output.
@@ -42,7 +39,7 @@ def discover_skills(*, cwd: Path | None = None, home: Path | None = None) -> Lis
     cwd = Path.cwd() if cwd is None else cwd
     search_dirs = get_search_dirs(cwd=cwd, home=home)
 
-    skills: List[Skill] = []
+    skills: list[Skill] = []
     seen: set[str] = set()
 
     for directory in search_dirs:

@@ -1,9 +1,7 @@
 """Rendering and synchronization helpers for AGENTS.md skill tables."""
 
-from __future__ import annotations
-
 import re
-from typing import Iterable, Sequence
+from collections.abc import Iterable, Sequence
 
 from .skills import Skill
 

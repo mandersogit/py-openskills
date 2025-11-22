@@ -1,14 +1,12 @@
 """Git-backed repository helpers for skill working copies."""
 
-from __future__ import annotations
-
 import os
 import shutil
 import subprocess
 import tempfile
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable, Sequence
 
 GitRunner = Callable[[Sequence[str], str | None], str]
 
