@@ -1,6 +1,6 @@
 # Py-OpenSkills (Work in Progress)
 
-Py-OpenSkills is an in-progress **Python reimplementation** of the OpenSkills CLI. The goal is to deliver a fully compatible skills manager for Claude Code and other AI coding agents while aligning with Python tooling and packaging. This repository currently includes artifacts from the original TypeScript project as reference material while the port proceeds.
+Py-OpenSkills is an in-progress **Python reimplementation** of the OpenSkills CLI. The goal is to deliver a fully compatible skills manager for Claude Code and other AI coding agents while aligning with Python tooling and packaging. Legacy Node/TypeScript sources now live under `legacy-typescript/` so the root of the repo reflects the Python work while still keeping the original implementation available for reference.
 
 **Status:** Expect breaking changes and incomplete command coverage while the Python CLI is built out. Commands, flags, and folder layouts are being kept consistent with the original Node release to keep migration simple.
 

@@ -1,5 +1,7 @@
 node_modules/
 dist/
+legacy-typescript/node_modules/
+legacy-typescript/dist/
 .DS_Store
 *.log
 .openskills-temp/
