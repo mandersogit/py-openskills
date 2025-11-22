@@ -76,6 +76,16 @@ openskills sync
 
 Done! Your agent now has skills with the same `<available_skills>` format as Claude Code.
 
+## Python package and migration notes
+
+- **Minimum Python**: 3.9+.
+- **Install**: From this repository, run `python -m pip install .` (or `python -m pip install .[prompts,rich]` to pull in optional extras).
+- **Entry point**: `openskills` is installed as a console script, matching the Node CLI name for drop-in usage.
+- **Optional dependencies**:
+  - `questionary` unlocks richer interactive prompts (multi-select/confirm flows). Without it, the CLI falls back to standard Click prompts and non-interactive flags (`--yes`) still work.
+  - `rich` provides formatted console output. Without it, messages render as plain text.
+- **Migration**: Commands, flags, and folder layouts mirror the Node version, so existing automation can switch to the Python package without changes. Optional extras are not required for headless environments.
+
 ---
 
 ## How It Works (Technical Deep Dive)
