@@ -26,6 +26,11 @@ def _create_git_repo(base: Path) -> Path:
     nested.mkdir()
     _write_skill(nested, "skill-two", "Skill two description", "Details for two")
 
+    # The isolated filesystem used by the tests has no git configuration. Without
+    # explicitly providing author and committer metadata, `git commit` will abort
+    # with "Author identity unknown", which is the failure seen in the original
+    # CI run. Supplying the identity via the environment keeps the helper
+    # self-contained and prevents the commit from failing due to missing config.
     git_env = {
         **os.environ,
         "GIT_AUTHOR_NAME": "Test",
