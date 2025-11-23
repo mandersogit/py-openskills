@@ -1,8 +1,10 @@
-# Py-OpenSkills (Work in Progress)
+# Py-OpenSkills
 
-Py-OpenSkills is an in-progress **Python reimplementation** of the OpenSkills CLI. The goal is to deliver a fully compatible skills manager for Claude Code and other AI coding agents while aligning with Python tooling and packaging. Legacy Node/TypeScript sources now live under `legacy-typescript/` so the root of the repo reflects the Python work while still keeping the original implementation available for reference.
+Py-OpenSkills is the **Python reimplementation** of the OpenSkills CLI. It provides a fully compatible skills manager for Claude Code and other AI coding agents while aligning with Python tooling and packaging. Legacy Node/TypeScript sources now live under `legacy-typescript/` so the root of the repo reflects the Python work while still keeping the original implementation available for reference.
 
-**Status:** Expect breaking changes and incomplete command coverage while the Python CLI is built out. Commands, flags, and folder layouts are being kept consistent with the original Node release to keep migration simple.
+**Status:** Pre-1.0 alpha, packaged for an initial PyPI release (`0.1.0`). Commands, flags, and folder layouts are kept consistent with the original release to keep migration simple.
+
+**Authorship:** Built on the original OpenSkills work by **Numman Ali**; the Python port was created by **OpenAI Codex** under **Matt Anderson's** supervision, with contributions from **Matt Anderson**.
 
 ---
 
@@ -40,12 +42,12 @@ OpenSkills replicates Claude Code's skills system with **100% compatibility**:
 
 ## Quick Start
 
-### 1. Install (Python, local checkout while WIP)
+### 1. Install (PyPI)
 
 ```bash
-python -m pip install .
-# or, for development
-python -m pip install -e .[prompts,rich]
+python -m pip install openskills
+# or, for development extras
+python -m pip install "openskills[prompts,rich]"
 ```
 
 ### 2. Install Skills
@@ -78,6 +80,17 @@ Done! Your agent now has skills with the same `<available_skills>` format as Cla
   - `rich` provides formatted console output. Without it, messages render as plain text.
 - **Typing**: Parallel work is adopting Python 3.11+ typing features (e.g., native generics, `Path.is_relative_to`) across the codebase; type hints may change as modules are ported.
 - **Migration**: Commands, flags, and folder layouts mirror the Node version, so existing automation can switch to the Python package without changes. Optional extras are not required for headless environments.
+
+## Packaging and release checklist
+
+Use this flow to publish to PyPI once changes are merged and tagged:
+
+1. Update the version in both `pyproject.toml` and `openskills/__init__.py`.
+2. Clean old artifacts: `rm -rf build dist`.
+3. Build wheels and source distributions: `python -m build`.
+4. Verify metadata: `python -m twine check dist/*`.
+5. Upload to PyPI (or TestPyPI): `python -m twine upload dist/*`.
+6. Smoke-test the published package: `python -m pip install --no-cache-dir openskills` and run `openskills --help`.
 
 ---
 
