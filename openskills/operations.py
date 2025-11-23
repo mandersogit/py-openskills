@@ -132,9 +132,16 @@ def list_skills_command(*, cwd: Path | None = None, home: Path | None = None) ->
 
     if not skills:
         click.echo("No skills installed.\n")
-        click.echo("Install skills:")
-        click.echo("  openskills install anthropics/skills         # Project (default)")
-        click.echo("  openskills install owner/skill --global     # Global (advanced)")
+        click.echo(
+            "\n".join(
+                [
+                    "Install skills:",
+                    "  openskills install owner/skill     Install from GitHub owner/repo",
+                    "  openskills install <git-url>       Install from Git URL",
+                    "  openskills install --help          See all install options",
+                ]
+            )
+        )
         return
 
     sorted_skills = sorted(skills, key=lambda s: (s.location != "project", s.name.lower()))
