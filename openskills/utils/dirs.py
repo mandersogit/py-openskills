@@ -17,14 +17,14 @@ def _as_path(value: Path | str | None, *, default: Path) -> Path:
 def get_skills_dir(
     *,
     project_local: bool = False,
-    universal: bool = False,
+    universal: bool = True,
     cwd: Path | str | None = None,
     home_dir: Path | str | None = None,
 ) -> Path:
     """Return the directory where skills should be installed.
 
-    Mirrors the Node implementation: defaults to the global Claude directory,
-    with optional project-local and universal (.agent) modes.
+    Mirrors the Node implementation: defaults to the universal `.agent/skills`
+    directory, with optional project-local and Claude-specific modes.
     """
 
     cwd_path = _as_path(cwd, default=Path.cwd())
@@ -79,7 +79,7 @@ class DestinationInfo:
 def resolve_destination(
     *,
     global_install: bool = False,
-    universal: bool = False,
+    universal: bool = True,
     cwd: Path | str | None = None,
     home_dir: Path | str | None = None,
 ) -> DestinationInfo:

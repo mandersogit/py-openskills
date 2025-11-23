@@ -1,13 +1,13 @@
 from openskills.utils import get_search_dirs, get_skills_dir, resolve_destination
 
 
-def test_get_skills_dir_defaults_to_global_claude(tmp_path) -> None:
+def test_get_skills_dir_defaults_to_global_agent(tmp_path) -> None:
     home_dir = tmp_path / "home"
     home_dir.mkdir()
 
     path = get_skills_dir(home_dir=home_dir)
 
-    assert path == home_dir / ".claude/skills"
+    assert path == home_dir / ".agent/skills"
 
 
 def test_get_skills_dir_project_universal(tmp_path) -> None:
@@ -43,10 +43,21 @@ def test_resolve_destination_defaults_to_project(tmp_path) -> None:
 
     destination = resolve_destination(cwd=cwd, home_dir=home_dir)
 
+    assert destination.target_dir == cwd / ".agent/skills"
+    assert destination.folder == ".agent/skills"
+    assert destination.scope == "project"
+    assert destination.label.startswith("project")
+
+
+def test_resolve_destination_claude_special_case(tmp_path) -> None:
+    cwd = tmp_path / "project"
+    cwd.mkdir()
+
+    destination = resolve_destination(universal=False, cwd=cwd, home_dir=tmp_path)
+
     assert destination.target_dir == cwd / ".claude/skills"
     assert destination.folder == ".claude/skills"
     assert destination.scope == "project"
-    assert destination.label.startswith("project")
 
 
 def test_resolve_destination_honors_global_universal(tmp_path) -> None:

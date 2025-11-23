@@ -30,13 +30,13 @@ OpenSkills replicates Claude Code's skills system with **100% compatibility**:
 
 - ✅ **Same prompt format** — `<available_skills>` XML with skill tags
 - ✅ **Same marketplace** — Install from [anthropics/skills](https://github.com/anthropics/skills)
-- ✅ **Same folders** — Uses `.claude/skills/` by default
+- ✅ **Same folders** — Uses `.agent/skills/` by default (optional `.claude/skills/` compatibility)
 - ✅ **Same SKILL.md format** — YAML frontmatter + markdown instructions
 - ✅ **Same progressive disclosure** — Load skills on demand, not upfront
 
 **Only difference:** Claude Code uses `Skill("pdf")` tool, OpenSkills uses `openskills read <name>` CLI command.
 
-**Advanced:** Use `--universal` flag to install to `.agent/skills/` for Claude Code + other agents sharing one AGENTS.md.
+**Advanced:** Use `--claude` flag to install to `.claude/skills/` when you only want Claude Code compatibility.
 
 ---
 
@@ -193,7 +193,7 @@ Usage notes:
 | **System Prompt** | Built into Claude Code | In AGENTS.md |
 | **Invocation** | `Skill("pdf")` tool | `openskills read pdf` CLI |
 | **Prompt Format** | `<available_skills>` XML | `<available_skills>` XML (identical) |
-| **Folder Structure** | `.claude/skills/` | `.claude/skills/` (identical) |
+| **Folder Structure** | `.claude/skills/` | `.agent/skills/` (default) + optional `.claude/skills/` |
 | **SKILL.md Format** | YAML + markdown | YAML + markdown (identical) |
 | **Progressive Disclosure** | Yes | Yes |
 | **Bundled Resources** | `references/`, `scripts/`, `assets/` | `references/`, `scripts/`, `assets/` (identical) |
@@ -283,36 +283,34 @@ You can use **both** Claude Code plugins and OpenSkills project skills together:
 
 They coexist perfectly. Claude invokes marketplace plugins via `Skill` tool, OpenSkills skills via CLI. No conflicts.
 
-### Advanced: Universal Mode for Multi-Agent Setups
+### Advanced: Claude-Only Mode
 
-**Problem:** If you use Claude Code + other agents (Cursor, Windsurf, Aider) with one AGENTS.md, installing to `.claude/skills/` can create duplicates with Claude Code's marketplace plugins.
+**Problem:** Claude Code's built-in plugins already live in `.claude/skills/`. If you only use Claude Code and want to keep everything in that folder, you may prefer to install there instead of the universal `.agent/skills/` default.
 
-**Solution:** Use `--universal` to install to `.agent/skills/` instead:
+**Solution:** Use `--claude` to install to `.claude/skills/`:
 
 ```bash
-openskills install anthropics/skills --universal
+openskills install anthropics/skills --claude
 ```
 
-This installs skills to `.agent/skills/` which:
-- ✅ Works with all agents via AGENTS.md
-- ✅ Doesn't conflict with Claude Code's native marketplace plugins
-- ✅ Keeps Claude Code's `<available_skills>` separate from AGENTS.md skills
+This installs skills to `.claude/skills/` which:
+- ✅ Matches Claude Code's default layout exactly
+- ✅ Keeps universal `.agent/` folders untouched for other tools
 
 **When to use:**
-- ✅ You use Claude Code + Cursor/Windsurf/Aider with one AGENTS.md
-- ✅ You want to avoid duplicate skill definitions
-- ✅ You prefer `.agent/` for infrastructure (keeps `.claude/` for Claude Code only)
+- ✅ You only use Claude Code and want everything together
+- ✅ You need to share folders with existing `.claude/skills/` automation
 
 **When not to use:**
-- ❌ You only use Claude Code (default `.claude/skills/` is fine)
-- ❌ You only use non-Claude agents (default `.claude/skills/` is fine)
+- ❌ You mix Claude Code with other agents (use default universal `.agent/skills/`)
+- ❌ You want a single AGENTS.md for multiple tools
 
 **Priority order:**
 OpenSkills searches 4 locations in priority order:
 1. `./.agent/skills/` (project universal)
 2. `~/.agent/skills/` (global universal)
-3. `./.claude/skills/` (project)
-4. `~/.claude/skills/` (global)
+3. `./.claude/skills/` (project Claude)
+4. `~/.claude/skills/` (global Claude)
 
 Skills with same name only appear once (highest priority wins).
 
@@ -331,8 +329,8 @@ openskills remove <name>               # Remove specific skill
 
 ### Flags
 
-- `--global` — Install globally to `~/.claude/skills` (default: project install)
-- `--universal` — Install to `.agent/skills/` instead of `.claude/skills/` (advanced)
+- `--global` — Install globally to `~/.agent/skills` (default: project install)
+- `--claude` — Install to `.claude/skills/` instead of `.agent/skills/`
 - `-y` — Skip interactive selection (for scripts/CI)
 
 ### Installation Modes
@@ -340,19 +338,19 @@ openskills remove <name>               # Remove specific skill
 **Default (recommended):**
 ```bash
 openskills install anthropics/skills
-# → Installs to ./.claude/skills (project, gitignored)
+# → Installs to ./.agent/skills (project, gitignored)
 ```
 
 **Global install:**
 ```bash
 openskills install anthropics/skills --global
-# → Installs to ~/.claude/skills (shared across projects)
+# → Installs to ~/.agent/skills (shared across projects)
 ```
 
-**Universal mode (advanced):**
+**Claude-only mode (advanced):**
 ```bash
-openskills install anthropics/skills --universal
-# → Installs to ./.agent/skills (for Claude Code + other agents)
+openskills install anthropics/skills --claude
+# → Installs to ./.claude/skills (for Claude Code-only setups)
 ```
 
 ### Interactive by Default
