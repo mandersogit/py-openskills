@@ -17,7 +17,7 @@ class WorkingCopy:
 
     path: str
     source: str
-    commit: str
+    commit: str | None
     cleanup: Callable[[], None]
 
 
@@ -88,7 +88,11 @@ def prepare_skill_working_copy(
     else:
         git_clone(normalized_source, working_dir, git_runner=git_runner)
 
-    commit = _rev_parse_head(working_dir, git_runner=git_runner)
+    commit: str | None
+    try:
+        commit = _rev_parse_head(working_dir, git_runner=git_runner)
+    except subprocess.CalledProcessError:
+        commit = None
 
     return WorkingCopy(str(working_dir), normalized_source, commit, _cleanup)
 

@@ -86,3 +86,18 @@ def test_prepare_skill_working_copy_copies_local_repository(tmp_path: Path) -> N
     working_copy.cleanup()
     assert not Path(working_copy.path).exists()
 
+
+def test_prepare_skill_working_copy_accepts_non_git_local_source(tmp_path: Path) -> None:
+    source_dir = tmp_path / "non_git_source"
+    source_dir.mkdir()
+    (source_dir / "SKILL.md").write_text("metadata", encoding="utf-8")
+
+    working_copy = prepare_skill_working_copy(str(source_dir), temp_root=str(tmp_path))
+
+    assert Path(working_copy.path) != source_dir
+    assert (Path(working_copy.path) / "SKILL.md").read_text(encoding="utf-8") == "metadata"
+    assert working_copy.commit is None
+
+    working_copy.cleanup()
+    assert not Path(working_copy.path).exists()
+
