@@ -40,10 +40,9 @@ def list_skills() -> None:
 @click.option("global_install", "-g", "--global", is_flag=True, help="Install globally (default: project install)")
 @click.option(
     "universal",
-    "-u",
-    "--universal",
-    is_flag=True,
-    help="Install to .agent/skills/ (for universal AGENTS.md usage)",
+    "--universal/--claude",
+    default=True,
+    help="Install to .agent/skills/ (default) or .claude/skills/ (Claude-only)",
 )
 @click.option(
     "yes",
