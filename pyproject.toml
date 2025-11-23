@@ -4,17 +4,34 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "openskills"
-version = "1.2.1"
+version = "0.1.0"
 description = "Python port of the OpenSkills CLI."
-readme = "README.md"
+readme = {file = "README.md", content-type = "text/markdown"}
 requires-python = ">=3.11"
 license = {file = "LICENSE"}
-authors = [{name = "OpenSkills Maintainers"}]
+authors = [
+    {name = "Numman Ali (original OpenSkills)"},
+    {name = "OpenAI Codex (Python port)"},
+    {name = "Matt Anderson (supervision and contributions)"},
+]
 dependencies = [
     "click>=8.1,<9",
     "PyYAML>=6,<7",
 ]
 keywords = ["cli", "skills", "anthropic", "agent"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development",
+    "Topic :: Utilities",
+]
 
 [project.optional-dependencies]
 prompts = ["questionary>=2.0,<3"]
